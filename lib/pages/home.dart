@@ -179,6 +179,7 @@ class _HomeState extends State<Home> {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               softWrap: true,
+                              style: TextStyle(color: Colors.grey),
                             )
                           ],
                         )
@@ -248,6 +249,69 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   );
+                }),
+              ),
+            ),
+
+            SizedBox(height: 40,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                children: [
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(IMAGES_PLAYLISTS[Random().nextInt(IMAGES_PLAYLISTS.length - 1)],),
+                          fit: BoxFit.fitHeight
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 15,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Plus du genre de '.toUpperCase(),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.grey),
+                      ),
+                      SizedBox(height: 5,),
+                      Text(
+                        'Main Stage',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 20.0),
+              height: 200.0,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: List.generate(10, (index) {
+                  return AlbumCard();
+                }),
+              ),
+            ),
+
+            SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Text(
+                'Créé pour Thomas Dupont',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 20.0),
+              height: 200.0,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: List.generate(10, (index) {
+                  return AlbumCard();
                 }),
               ),
             ),

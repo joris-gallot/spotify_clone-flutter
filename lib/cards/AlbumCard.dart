@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:lipsum/lipsum.dart' as lipsum;
 
 import '../contants.dart';
@@ -32,6 +33,7 @@ class _AlbumCardState extends State<AlbumCard> {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             softWrap: true,
+            style: TextStyle(color: Colors.grey),
           )
         ],
       ),
