@@ -8,6 +8,6 @@ class Library extends StatefulWidget {
 class _LibraryState extends State<Library> {
   @override
   Widget build(BuildContext context) {
-    return Text('3');
+    return SafeArea(child: Center(child: Text('Bibliothèque')));
   }
 }

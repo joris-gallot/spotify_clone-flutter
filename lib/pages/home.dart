@@ -2,7 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spotify_clone/cards/AlbumCard.dart';
+import 'package:flutter_spotify_clone/cards/ArtistCard.dart';
 import 'package:lipsum/lipsum.dart' as lipsum;
+
+import '../contants.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -12,9 +16,20 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomCenter,
+          stops: [0.05, 0.25],
+          colors: [
+            Color.fromRGBO(79, 90, 104, 1),
+            Color.fromRGBO(18, 18, 18, 1),
+          ],
+        ),
+      ),
       child: Padding(
-        padding: const EdgeInsets.only(top: 35),
+        padding: const EdgeInsets.only(top: 15),
         child: ListView(
           children: [
             Padding(
@@ -26,7 +41,7 @@ class _HomeState extends State<Home> {
                   Container(
                     child: Row(
                       children: [
-                        IconButton(icon: new Icon(Icons.lock_clock), onPressed: () => print('time')),
+                        IconButton(icon: new Icon(Icons.schedule), onPressed: () => print('time')),
                         IconButton(icon: new Icon(Icons.settings), onPressed: () => print('settings'))
                       ],
                     ),
@@ -40,8 +55,8 @@ class _HomeState extends State<Home> {
               child: GridView.count(
                 shrinkWrap: true,
                 crossAxisCount: 2,
-                childAspectRatio: 2.5,
-                children: List.generate(4, (index) {
+                childAspectRatio: 2.7,
+                children: List.generate(6, (index) {
                   return Card(
                     child: Padding(
                       padding: const EdgeInsets.only(right: 5),
@@ -50,7 +65,7 @@ class _HomeState extends State<Home> {
                           ClipRRect(
                             borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
                             child: Image.network(
-                                'https://generative-placeholders.glitch.me/image?width=150&height=150&img=' + (Random().nextInt(9) + 10).toString(),
+                                IMAGES_PLAYLISTS[Random().nextInt(IMAGES_PLAYLISTS.length - 1)],
                                 fit: BoxFit.fitHeight
                             )
                           ),
@@ -93,7 +108,7 @@ class _HomeState extends State<Home> {
                     children: [
                       Text(
                         'Plus du genre de '.toUpperCase(),
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.grey),
                       ),
                       SizedBox(height: 5,),
                       Text(
@@ -111,25 +126,61 @@ class _HomeState extends State<Home> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: List.generate(10, (index) {
+                  return AlbumCard();
+                }),
+              ),
+            ),
+            SizedBox(height: 25,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Text(
+                'S\'évader et se divertir',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 20.0),
+              height: 215.0,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: List.generate(5, (index) {
                   return Container(
-                    margin: EdgeInsets.only(left: 20),
-                    width: 200.0,
+                    margin: EdgeInsets.only(left: 15),
+                    width: 150.0,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: 200.0,
+                          width: 150.0,
                           height: 150,
-                          child: Image.network(
-                              'https://generative-placeholders.glitch.me/image?width=200&height=150&img=' + (Random().nextInt(9) + 10).toString(),
-                              fit: BoxFit.fitHeight
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                                IMAGES_PODCASTS[Random().nextInt(IMAGES_PODCASTS.length - 1)],
+                                fit: BoxFit.fitHeight
+                            ),
                           ),
                         ),
-                        Text(
-                          lipsum.createSentence(),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: true,
+                        Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                lipsum.createWord(numWords: 1),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: true,
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ),
+                            SizedBox(height: 2,),
+                            Text(
+                              lipsum.createSentence(),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                            )
+                          ],
                         )
                       ],
                     ),
@@ -137,7 +188,7 @@ class _HomeState extends State<Home> {
                 }),
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(height: 25,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Text(
@@ -147,38 +198,18 @@ class _HomeState extends State<Home> {
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 20.0),
-              height: 180.0,
+              height: 200.0,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: List.generate(10, (index) {
-                  return Container(
-                    width: 170.0,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 150,
-                          height: 150,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: NetworkImage('https://i.pravatar.cc/300?img=' + (Random().nextInt(10) + 1).toString()),
-                                fit: BoxFit.fitHeight
-                            ),
-                          ),
-                          // color: Colors.blue,
-                        ),
-                        Text(
-                          lipsum.createWord(numWords: Random().nextInt(2) + 1),
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: true,
-                        )
-                      ],
-                    ),
-                  );
+                  var isArtist = Random().nextBool();
+
+                  if (isArtist) return ArtistCard();
+                  return AlbumCard();
                 }),
               ),
             ),
+            SizedBox(height: 25,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Text(
